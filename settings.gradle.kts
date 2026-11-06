@@ -10,7 +10,8 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
-rootProject.name = "fork"
+rootProject.name = "yunqimc"
 
-include("fork-api")
-include("fork-server")
+include("yunqimc-api")
+include("yunqimc-server")
+include("yunqimc-bench-plugin")

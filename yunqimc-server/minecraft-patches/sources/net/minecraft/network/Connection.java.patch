@@ -1,0 +1,12 @@
+--- a/net/minecraft/network/Connection.java
++++ b/net/minecraft/network/Connection.java
+@@ -228,5 +_,8 @@
+             boolean flag = protocolInfo.id() == ConnectionProtocol.LOGIN;
+-            syncAfterConfigurationChange(this.channel.writeAndFlush(outboundConfigurationTask.andThen(ctx -> this.sendLoginDisconnect = flag)));
++            syncAfterConfigurationChange(this.channel.writeAndFlush(outboundConfigurationTask.andThen(ctx -> {
++                this.sendLoginDisconnect = flag;
++                dev.yunqimc.server.network.NetworkInstrumentation.protocolChanged(ctx.channel(), protocolInfo.id() == ConnectionProtocol.PLAY); // YunqiMC
++            })));
+         }
+     }
+ 

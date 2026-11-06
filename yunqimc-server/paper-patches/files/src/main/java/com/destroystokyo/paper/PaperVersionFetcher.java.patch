@@ -1,0 +1,20 @@
+--- a/src/main/java/com/destroystokyo/paper/PaperVersionFetcher.java
++++ b/src/main/java/com/destroystokyo/paper/PaperVersionFetcher.java
+@@ -54,5 +_,8 @@
+     @Override
+     public Component getVersionMessage() {
++        if (!BUILD_INFO.brandId().equals(ServerBuildInfo.BRAND_PAPER_ID)) {
++            return text("YunqiMC development build; automatic release checks are not configured.");
++        }
+         final Component updateMessage;
+         if (BUILD_INFO.buildNumber().isEmpty() && BUILD_INFO.gitCommit().isEmpty()) {
+             updateMessage = text("You are running a development version without access to version information", color(0xFF5300));
+@@ -67,4 +_,8 @@
+     public static void getUpdateStatusStartupMessage() {
++        if (!BUILD_INFO.brandId().equals(ServerBuildInfo.BRAND_PAPER_ID)) {
++            COMPONENT_LOGGER.info(text("YunqiMC development build; automatic release checks are not configured."));
++            return;
++        }
+         int distance = DISTANCE_ERROR;
+ 
+         final OptionalInt buildNumber = BUILD_INFO.buildNumber();

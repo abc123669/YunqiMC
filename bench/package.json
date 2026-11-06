@@ -1,0 +1,8 @@
+{
+  "name": "yunqimc-bench",
+  "private": true,
+  "version": "0.1.0-alpha.1",
+  "description": "Local controlled Minecraft load generator for YunqiMC",
+  "engines": { "node": ">=22" },
+  "dependencies": { "mineflayer": "4.39.0" }
+}

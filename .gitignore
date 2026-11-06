@@ -5,12 +5,30 @@
 build
 
 /run
+/dist/
+/yunqimc-server/logs/
 
-/fork-server/build.gradle.kts
-/fork-server/src/minecraft
+/yunqimc-server/build.gradle.kts
+/yunqimc-server/src/minecraft
 /paper-server
-/fork-api/build.gradle.kts
+/yunqimc-api/build.gradle.kts
 /paper-api
 /paper-api-generator
 
 .idea/
+
+# JVM crash reports can include environment and system information.
+hs_err_pid*.log
+replay_pid*.log
+/bench/node_modules/
+/bench/runs/
+/bench/suite-runs/
+/bench/longrun-status.json
+/bench/longrun.stdout.log
+/bench/longrun.stderr.log
+/bench/longrun.pid
+/bench/monitor.stdout.log
+/bench/monitor.stderr.log
+/bench/monitor.pid
+__pycache__/
+*.pyc

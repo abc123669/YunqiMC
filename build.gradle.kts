@@ -11,18 +11,18 @@ paperweight {
 
         patchFile {
             path = "paper-server/build.gradle.kts"
-            outputFile = file("fork-server/build.gradle.kts")
-            patchFile = file("fork-server/build.gradle.kts.patch")
+            outputFile = file("yunqimc-server/build.gradle.kts")
+            patchFile = file("yunqimc-server/build.gradle.kts.patch")
         }
         patchFile {
             path = "paper-api/build.gradle.kts"
-            outputFile = file("fork-api/build.gradle.kts")
-            patchFile = file("fork-api/build.gradle.kts.patch")
+            outputFile = file("yunqimc-api/build.gradle.kts")
+            patchFile = file("yunqimc-api/build.gradle.kts.patch")
         }
         patchDir("paperApi") {
             upstreamPath = "paper-api"
             excludes = setOf("build.gradle.kts")
-            patchesDir = file("fork-api/paper-patches")
+            patchesDir = file("yunqimc-api/paper-patches")
             outputDir = file("paper-api")
         }
     }
@@ -53,6 +53,7 @@ subprojects {
         options.encoding = Charsets.UTF_8.name()
         options.release = 21
         options.isFork = true
+        options.compilerArgs.addAll(listOf("-Xlint:-deprecation", "-Xlint:-removal"))
     }
     tasks.withType<Javadoc> {
         options.encoding = Charsets.UTF_8.name()
@@ -78,4 +79,28 @@ subprojects {
              */
         }
     }
+}
+
+project(":yunqimc-server") {
+    val testSources = extensions.getByType<SourceSetContainer>().named("test")
+    val verifyYunqiVersion = tasks.register("verifyYunqiVersion") {
+        val expected = providers.gradleProperty("yunqimcVersion")
+        val source = layout.projectDirectory.file("src/main/java/dev/yunqimc/server/YunqiVersion.java")
+        inputs.property("yunqimcVersion", expected)
+        inputs.file(source)
+        doLast {
+            check(source.asFile.readText().contains("VERSION = \"${expected.get()}\"")) {
+                "YunqiVersion.VERSION must match yunqimcVersion in gradle.properties"
+            }
+        }
+    }
+    val yunqiTest = tasks.register<Test>("yunqiTest") {
+        description = "Runs YunqiMC-specific server tests."
+        group = "verification"
+        testClassesDirs = testSources.get().output.classesDirs
+        classpath = testSources.get().runtimeClasspath
+        useJUnitPlatform()
+        include("dev/yunqimc/**/*Test.class")
+    }
+    tasks.named("check") { dependsOn(yunqiTest, verifyYunqiVersion) }
 }

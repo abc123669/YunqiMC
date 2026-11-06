@@ -1,0 +1,13 @@
+name: YunqiProtocolProbe
+version: 0.1.0-alpha.1
+main: dev.yunqimc.probe.ProtocolProbe
+api-version: '1.21.11'
+depend: [ProtocolLib]
+author: YunqiMC
+commands:
+  yqprotocolprobe:
+    description: Show ProtocolLib test counts.
+    permission: yunqimc.probe
+permissions:
+  yunqimc.probe:
+    default: op

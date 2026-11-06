@@ -1,0 +1,13 @@
+name: YunqiBench
+version: 0.1.0-alpha.1
+main: dev.yunqimc.bench.TickRecorder
+api-version: '1.21.11'
+description: Records raw per-tick timing samples for controlled YunqiMC benchmarks.
+author: YunqiMC
+commands:
+  yqcompat:
+    description: Exercise persistent data in an isolated test world.
+    permission: yunqimc.bench.compat
+permissions:
+  yunqimc.bench.compat:
+    default: op
